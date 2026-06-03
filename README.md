@@ -1,5 +1,7 @@
 # Magnific
 
+![Demo](assets/demo.gif)
+
 Magnific is a small creative pipeline that takes:
 
 * two reference images
