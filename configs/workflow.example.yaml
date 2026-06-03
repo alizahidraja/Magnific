@@ -1,0 +1,31 @@
+# Copy to workflow.yaml and adjust paths/models for your API access.
+idea: "A loving couple going through daily life — arguments, chores, reconciliation"
+job_id: null
+paths:
+  jobs_dir: jobs
+  reference_image_a: assets/ref_a.png
+  reference_image_b: assets/ref_b.png
+models:
+  # See https://ai.google.dev/gemini-api/docs/models — change without editing Python.
+  story: gemini-2.0-flash
+  preview: gemini-2.5-flash-image
+  config_generator: gemini-2.0-flash
+  video: veo-2.0-generate-001
+prompts:
+  story_template: configs/prompts/story.txt
+  preview_template: configs/prompts/preview.txt
+  video_template: configs/prompts/video.txt
+  config_generator_template: configs/prompts/config_generator.json
+concurrency:
+  preview_max: 4
+  video_submit_max: 4
+  video_poll_max: 8
+retry:
+  max_attempts: 5
+  base_delay_seconds: 1.0
+  max_delay_seconds: 60.0
+  jitter: true
+video:
+  aspect_ratio: "16:9"
+  duration_seconds: 5
+  poll_interval_seconds: 10.0

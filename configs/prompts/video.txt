@@ -1,0 +1,5 @@
+Animate this scene from the preview image.
+
+Motion prompt: {video_prompt}
+
+Maintain visual consistency with the preview frame. Smooth, natural motion.

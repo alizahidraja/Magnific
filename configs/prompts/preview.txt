@@ -1,0 +1,6 @@
+Generate a cinematic still frame.
+
+Scene prompt: {image_prompt}
+
+Use the provided reference images for character and style consistency.
+Aspect ratio and composition should suit video storyboards.
