@@ -1,6 +1,13 @@
-Generate a cinematic still frame.
+Generate a cinematic still frame for a video storyboard.
 
-Scene prompt: {image_prompt}
+Scene:
+{image_prompt}
 
-Use the provided reference images for character and style consistency.
-Aspect ratio and composition should suit video storyboards.
+Requirements:
+- Match the character design and style from the reference images exactly.
+- Focus on composition, lighting, and mood (film-like quality).
+- Frame the scene as if it is a key moment in a short film.
+- Use depth, perspective, and environmental detail where appropriate.
+- Ensure the image works as a strong visual base for animation.
+
+Output should be visually consistent and realistic.

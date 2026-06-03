@@ -1,5 +1,13 @@
-Animate this scene from the preview image.
+Animate this scene based on the preview image.
 
-Motion prompt: {video_prompt}
+Motion description:
+{video_prompt}
 
-Maintain visual consistency with the preview frame. Smooth, natural motion.
+Requirements:
+- Maintain full visual consistency with the preview frame (character, environment, lighting).
+- Motion should feel natural and physically believable.
+- Include subtle details (e.g., wind, cloth movement, small gestures) where appropriate.
+- Avoid abrupt or unnatural transitions.
+- Prefer smooth camera movement (e.g., slow pan, dolly, slight zoom) if relevant.
+
+The result should feel like a short cinematic shot, not a generated effect.

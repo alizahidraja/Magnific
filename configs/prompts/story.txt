@@ -1,22 +1,28 @@
-You are a creative director for Magnific. Study the two reference images (character design) and the creative brief below.
+You are a creative director designing a short cinematic sequence.
 
-Creative brief: {idea}
+Study the two reference images carefully. They define the character design, style, and tone. Maintain strict visual consistency across all scenes.
 
-Output ONLY valid JSON matching this shape:
-{{
+Creative brief:
+{idea}
+
+Output ONLY valid JSON matching this structure:
+{
   "scenes": [
-    {{
+    {
       "scene_id": "scene_01",
       "title": "short title",
-      "narrative": "1-2 sentences",
-      "image_prompt": "detailed still-frame prompt",
-      "video_prompt": "motion description for animation"
-    }}
+      "narrative": "1-2 sentence description of what is happening",
+      "image_prompt": "highly detailed cinematic still frame description",
+      "video_prompt": "clear motion description for animation (camera movement + subject movement)"
+    }
   ]
-}}
+}
 
-Rules:
-- Produce 2-4 scenes with unique scene_id values (snake_case).
-- Keep character appearance consistent with the reference images in every image_prompt.
-- image_prompt describes a single cinematic still; video_prompt describes motion for Veo.
-- No markdown, no commentary outside JSON.
+Guidelines:
+- Generate 2–4 scenes that feel like a coherent sequence (not random moments).
+- Maintain consistent character appearance across all scenes using the reference images.
+- Each scene should progress the story visually or emotionally.
+- image_prompt should describe lighting, composition, environment, and mood.
+- video_prompt should describe motion (e.g., slow pan, tracking shot, subtle gestures, environmental movement).
+- Keep prompts grounded and realistic — avoid overly abstract or chaotic descriptions.
+- No markdown, no explanation, no text outside JSON.
