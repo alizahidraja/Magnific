@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from pathlib import Path
 
 from magnific.config import save_workflow_config
@@ -53,6 +54,10 @@ class Orchestrator:
     async def run(self) -> dict[str, str | list[str]]:
         job = JobManager(self.config, self.config_path)
         job.ensure_layout()
+        if self.use_mock:
+            logger.warning("Pipeline running in MOCK mode (--mock). Outputs are placeholders.")
+        else:
+            logger.info("Pipeline running in LIVE mode (GOOGLE_API_KEY required).")
         gemini, veo = build_clients(use_mock=self.use_mock, retry=self.config.retry)
         ctx = StageContext(
             config=self.config,
@@ -69,14 +74,24 @@ class Orchestrator:
                 )
             stage = STAGE_REGISTRY[stage_name]
             logger.info("Running stage: %s", stage_name.value)
+            t0 = time.perf_counter()
             result = await stage.run(ctx)
+            elapsed = time.perf_counter() - t0
             manifest_paths.append(result.manifest_path)
             logger.info(
-                "Stage %s finished success=%s path=%s",
+                "Stage %s finished in %.1fs success=%s path=%s %s",
                 stage_name.value,
+                elapsed,
                 result.success,
                 result.manifest_path,
+                result.message or "",
             )
+            if not self.use_mock and elapsed < 2.0 and stage_name.value != "story":
+                logger.warning(
+                    "Stage %s completed very quickly (%.1fs) — check for mock artifacts or API errors.",
+                    stage_name.value,
+                    elapsed,
+                )
         self.config.job_id = job.job_id
         save_workflow_config(self.config, self.config_path)
         return {

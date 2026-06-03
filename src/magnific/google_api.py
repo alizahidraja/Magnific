@@ -44,6 +44,13 @@ def map_genai_exception(exc: BaseException) -> BaseException:
         if code >= 500:
             return RetryableError(str(exc), category=ErrorCategory.transient)
         message = str(exc).lower()
+        if code == 404 and ("model" in message or "not found" in message):
+            return NonRetryableError(
+                f"{exc}\nHint: update models in workflow.yaml "
+                "(e.g. story: gemini-2.5-flash, preview: gemini-2.5-flash-image, "
+                "video: veo-3.1-generate-preview).",
+                category=ErrorCategory.validation,
+            )
         if "safety" in message or "blocked" in message or "policy" in message:
             return NonRetryableError(str(exc), category=ErrorCategory.safety)
         if code in (400, 422):
@@ -100,3 +107,29 @@ def extract_image_bytes_from_response(response: Any) -> bytes:
 
 def is_imagen_model(model: str) -> bool:
     return model.lower().startswith("imagen")
+
+
+VEO_31_ALLOWED_DURATIONS = (4, 6, 8)
+
+
+def normalize_veo_duration_seconds(
+    duration_seconds: int,
+    *,
+    model: str,
+    image_to_video: bool = True,
+) -> int:
+    """
+    Map config duration to a value the Veo API accepts.
+
+    Veo 3.1 only supports 4, 6, or 8 seconds (not 5). Image-to-video on 3.1
+    requires 8 seconds per Google docs.
+    """
+    model_lower = model.lower()
+    if "veo-3" in model_lower:
+        if image_to_video:
+            return 8
+        if duration_seconds in VEO_31_ALLOWED_DURATIONS:
+            return duration_seconds
+        return min(VEO_31_ALLOWED_DURATIONS, key=lambda d: abs(d - duration_seconds))
+    # Veo 2.x: API message allows 4–8 inclusive
+    return max(4, min(8, duration_seconds))

@@ -7,7 +7,7 @@ from enum import Enum
 from typing import Any
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class ErrorCategory(str, Enum):
@@ -100,10 +100,10 @@ class ConcurrencyConfig(BaseModel):
 
 
 class ModelConfig(BaseModel):
-    story: str = "gemini-2.0-flash"
+    story: str = "gemini-2.5-flash"
     preview: str = "gemini-2.5-flash-image"
-    config_generator: str = "gemini-2.0-flash"
-    video: str = "veo-2.0-generate-001"
+    config_generator: str = "gemini-2.5-flash"
+    video: str = "veo-3.1-generate-preview"
 
 
 class PathsConfig(BaseModel):
@@ -121,8 +121,19 @@ class PromptsConfig(BaseModel):
 
 class VideoConfig(BaseModel):
     aspect_ratio: str = "16:9"
-    duration_seconds: int = 5
+    duration_seconds: int = 8
     poll_interval_seconds: float = 10.0
+
+    @field_validator("duration_seconds")
+    @classmethod
+    def duration_must_be_veo_allowed(cls, value: int) -> int:
+        """Veo 3.1 accepts only 4, 6, or 8 seconds."""
+        if value not in (4, 6, 8):
+            raise ValueError(
+                "video.duration_seconds must be 4, 6, or 8 (Veo 3.1). "
+                "Use 8 for image-to-video."
+            )
+        return value
 
 
 class WorkflowConfig(BaseModel):

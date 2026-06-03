@@ -37,8 +37,17 @@ async def test_mock_veo_flow(tmp_path) -> None:
     assert dest.exists()
 
 
-def test_build_clients_mock_env(monkeypatch) -> None:
-    monkeypatch.setenv("MAGNIFIC_MOCK_APIS", "1")
-    g, v = build_clients()
+def test_build_clients_mock_flag() -> None:
+    g, v = build_clients(use_mock=True)
     assert isinstance(g, MockGeminiClient)
     assert isinstance(v, MockVeoClient)
+
+
+def test_build_clients_requires_key(monkeypatch) -> None:
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    import pytest
+
+    from magnific.retry import NonRetryableError
+
+    with pytest.raises(NonRetryableError):
+        build_clients(use_mock=False)

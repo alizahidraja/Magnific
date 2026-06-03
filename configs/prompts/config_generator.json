@@ -4,5 +4,5 @@
   "models": {},
   "concurrency": {},
   "retry": {},
-  "video": {"aspect_ratio": "16:9", "duration_seconds": 5}
+  "video": {"aspect_ratio": "16:9", "duration_seconds": 8}
 }

@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import json
+import logging
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -18,10 +19,13 @@ from magnific.google_api import (
     is_imagen_model,
     map_genai_exception,
     mime_type_for_path,
+    normalize_veo_duration_seconds,
     parse_story_response_text,
 )
 from magnific.models import ErrorCategory, RetryConfig
 from magnific.retry import NonRetryableError, retry_async
+
+logger = logging.getLogger("magnific.google_clients")
 
 
 @dataclass
@@ -406,10 +410,22 @@ class HttpVeoClient(BaseVeoClient):
             )
         client = self._get_client()
         image = types.Image.from_file(location=str(preview_path))
+        effective_duration = normalize_veo_duration_seconds(
+            duration_seconds,
+            model=model,
+            image_to_video=True,
+        )
+        if effective_duration != duration_seconds:
+            logger.info(
+                "Adjusted Veo duration_seconds %s -> %s for model %s (image-to-video)",
+                duration_seconds,
+                effective_duration,
+                model,
+            )
         config = types.GenerateVideosConfig(
             number_of_videos=1,
             aspect_ratio=aspect_ratio,
-            duration_seconds=duration_seconds,
+            duration_seconds=effective_duration,
         )
         try:
             operation = await client.aio.models.generate_videos(
@@ -603,6 +619,11 @@ def build_clients(
     use_mock: bool = False,
     retry: RetryConfig | None = None,
 ) -> tuple[BaseGeminiClient, BaseVeoClient]:
-    if use_mock or os.environ.get("MAGNIFIC_MOCK_APIS", "").lower() in ("1", "true", "yes"):
+    if use_mock:
+        logger.warning(
+            "MOCK mode: no real API calls (pass nothing, not --mock, for live Gemini/Veo)"
+        )
         return MockGeminiClient(), MockVeoClient()
+    _require_api_key()
+    logger.info("LIVE mode: calling Google APIs via google-genai SDK")
     return HttpGeminiClient(retry=retry), HttpVeoClient(retry=retry)

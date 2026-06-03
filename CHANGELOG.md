@@ -54,3 +54,21 @@ The main goal here was not just to make it work, but to structure it properly:
 - prompt validation  
 - structured logging per job  
 - config validation before running  
+
+
+## 0.2.0
+
+### Added
+- Clear separation between mock and live execution (`--mock` required for mocks)
+- Explicit validation for `GOOGLE_API_KEY` in live runs
+- Stage-level logging with duration metrics
+- Placeholder detection for preview/video outputs to support correct resume behavior
+- `--fresh` flag to force new job execution
+
+### Fixed
+- Video duration handling aligned with Veo constraints
+- Config validation rejects unsupported durations (e.g. 5s)
+- Improved reliability when resuming from video stage
+
+### Notes
+- Video generation still requires further stabilization with live Veo APIs

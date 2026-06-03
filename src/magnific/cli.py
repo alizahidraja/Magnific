@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from pathlib import Path
 from typing import Optional
 from uuid import UUID
@@ -82,15 +83,32 @@ def run_pipeline(
     mock: bool = typer.Option(
         False,
         "--mock",
-        help="Force mock Google clients (also MAGNIFIC_MOCK_APIS=1)",
+        help="Offline mode: placeholder PNG/MP4, no API calls (for tests/CI only)",
+    ),
+    fresh: bool = typer.Option(
+        False,
+        "--fresh",
+        help="Start a new job (clears job_id in config before run)",
     ),
 ) -> None:
     """Execute pipeline for a workflow config."""
     setup_logging()
     cfg_path = config.resolve()
     workflow = load_workflow_config(cfg_path)
+    if fresh:
+        workflow.job_id = None
     if job_id:
         workflow.job_id = UUID(job_id)
+    if not mock and not os.environ.get("GOOGLE_API_KEY", "").strip():
+        typer.echo(
+            "Error: GOOGLE_API_KEY is not set. Export your key for a live run, or pass --mock.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+    if mock:
+        typer.echo("Running in MOCK mode (no Google API calls).", err=True)
+    else:
+        typer.echo("Running in LIVE mode (Gemini + Veo). This may take several minutes.", err=True)
     result = asyncio.run(
         Orchestrator(
             workflow,

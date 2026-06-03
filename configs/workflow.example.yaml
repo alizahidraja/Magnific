@@ -7,10 +7,10 @@ paths:
   reference_image_b: assets/ref_b.png
 models:
   # See https://ai.google.dev/gemini-api/docs/models — change without editing Python.
-  story: gemini-2.0-flash
+  story: gemini-2.5-flash
   preview: gemini-2.5-flash-image
-  config_generator: gemini-2.0-flash
-  video: veo-2.0-generate-001
+  config_generator: gemini-2.5-flash
+  video: veo-3.1-generate-preview
 prompts:
   story_template: configs/prompts/story.txt
   preview_template: configs/prompts/preview.txt
@@ -27,5 +27,5 @@ retry:
   jitter: true
 video:
   aspect_ratio: "16:9"
-  duration_seconds: 5
+  duration_seconds: 4
   poll_interval_seconds: 10.0

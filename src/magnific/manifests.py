@@ -13,6 +13,11 @@ from magnific.models import (
     SceneStatus,
     StageName,
 )
+from magnific.utils.artifacts import (
+    MIN_VALID_PREVIEW_BYTES,
+    MIN_VALID_VIDEO_BYTES,
+    is_placeholder_file,
+)
 
 
 class ManifestManager:
@@ -74,18 +79,26 @@ class ManifestManager:
     def find_resumable_scenes(
         envelope: ManifestEnvelope,
         output_check: dict[str, Path] | None = None,
+        *,
+        min_output_bytes: int | None = None,
     ) -> list[SceneRecord]:
-        """Scenes that still need work (not completed or missing output file)."""
+        """Scenes that still need work (not completed or missing/placeholder output)."""
+        default_threshold = (
+            MIN_VALID_PREVIEW_BYTES
+            if envelope.stage == StageName.preview
+            else MIN_VALID_VIDEO_BYTES
+        )
+        threshold = min_output_bytes or default_threshold
         resumable: list[SceneRecord] = []
         for scene in envelope.scenes:
-            if scene.status == SceneStatus.completed and output_check:
-                out = output_check.get(scene.scene_id)
-                if out and out.exists():
-                    continue
+            out = output_check.get(scene.scene_id) if output_check else None
             if scene.status in (SceneStatus.pending, SceneStatus.failed, SceneStatus.running):
                 resumable.append(scene)
-            elif scene.status == SceneStatus.completed and output_check:
-                out = output_check.get(scene.scene_id)
-                if out is None or not out.exists():
-                    resumable.append(scene)
+                continue
+            if scene.status != SceneStatus.completed:
+                continue
+            if out is None:
+                resumable.append(scene)
+            elif is_placeholder_file(out, min_bytes=threshold):
+                resumable.append(scene)
         return resumable
