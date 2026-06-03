@@ -72,3 +72,11 @@ The main goal here was not just to make it work, but to structure it properly:
 
 ### Notes
 - Video generation still requires further stabilization with live Veo APIs
+
+## 0.3.0
+
+### Fixed
+- Fixed video download in `HttpVeoClient` (was not saving output correctly, causing video stage to complete without files) 
+
+### Notes
+- Noticed video stage was taking time but producing no output, traced it back to a bug in the download step rather than generation itself

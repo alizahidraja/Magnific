@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "job_id": "68797cfe-a71f-4e62-8fea-0eed0a170c92",
+  "stage": "story",
+  "created_at": "2026-06-03T02:08:13.616764Z",
+  "updated_at": "2026-06-03T02:08:13.616800Z",
+  "scenes": [
+    {
+      "scene_id": "coastal_contemplation",
+      "title": "Golden Hour Serenity",
+      "status": "completed",
+      "image_prompt": "A cinematic medium shot of a young man, similar to the reference image (dark wavy hair, loose white linen shirt, dark pants), sitting on a stone wall overlooking a vast golden beach at sunset. His back is partially to the camera, head turned slightly to the right, observing the sun setting over the ocean, casting warm reflections on the water and wet sand. A vibrant orange and purple sky, with distant buildings along the coastline and mountains in the background. Ultra-wide lens, shallow depth of field, golden hour lighting.",
+      "video_prompt": "The camera slowly pushes in on the man as he gazes at the sunset, with subtle waves lapping the shore in the background. A gentle breeze rustles his hair and shirt. The light gradually fades slightly as the sun continues its descent.",
+      "preview_path": null,
+      "video_path": null,
+      "error": null,
+      "updated_at": "2026-06-03T02:08:13.616620Z"
+    },
+    {
+      "scene_id": "wave_rider",
+      "title": "Catching the Swell",
+      "status": "completed",
+      "image_prompt": "A dynamic low-angle cinematic shot of a young man, identical to the reference image (dark wavy hair, black long-sleeved rash guard, black board shorts), confidently riding a large, clear blue ocean wave. He is crouched low on his white surfboard, his body angled, looking forward with a focused smile. The wave is curling around him, showing intricate water spray and foam. Lush green mountains and a distant tropical beach are visible under a bright, partly cloudy sky in the background. Sun flares catch the water droplets. Action photography style.",
+      "video_prompt": "The camera tracks smoothly alongside the man as he surfs, capturing the rush of the wave breaking around him. Water splashes and sprays dynamically. His body subtly shifts to maintain balance, his hair blowing slightly in the wind, and the background subtly scrolls past.",
+      "preview_path": null,
+      "video_path": null,
+      "error": null,
+      "updated_at": "2026-06-03T02:08:13.616711Z"
+    },
+    {
+      "scene_id": "mountain_vista",
+      "title": "Summit Discovery",
+      "status": "completed",
+      "image_prompt": "A cinematic wide shot of a young man, consistent with the character (dark wavy hair, wearing a breathable light grey hiking shirt and dark cargo shorts), standing on a rocky outcrop at a mountain summit. His back is to the camera, arms slightly out, looking over a sprawling valley filled with lush green forests, winding rivers, and distant, majestic peaks under a clear blue sky with fluffy white clouds. Golden hour light catches the edges of the mountains. Ultra-detailed, awe-inspiring landscape.",
+      "video_prompt": "The camera slowly pans from left to right, revealing the expansive mountain vista. The man slowly turns his head from side to side, taking in the view. A subtle wind causes the leaves on distant trees to rustle gently. A bird might soar briefly in the sky.",
+      "preview_path": null,
+      "video_path": null,
+      "error": null,
+      "updated_at": "2026-06-03T02:08:13.616715Z"
+    }
+  ]
+}

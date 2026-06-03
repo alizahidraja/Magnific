@@ -488,8 +488,7 @@ class HttpVeoClient(BaseVeoClient):
                     "Video handle required for download",
                     category=ErrorCategory.validation,
                 )
-            await client.aio.files.download(file=video)
-            data = getattr(video, "video_bytes", None)
+            data = await client.aio.files.download(file=video)
             if not data:
                 raise NonRetryableError(
                     "Downloaded video has no bytes",

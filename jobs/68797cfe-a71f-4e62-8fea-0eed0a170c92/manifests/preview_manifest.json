@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "job_id": "68797cfe-a71f-4e62-8fea-0eed0a170c92",
+  "stage": "preview",
+  "created_at": "2026-06-03T01:51:52.924730Z",
+  "updated_at": "2026-06-03T02:08:41.745428Z",
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "title": "Opening",
+      "status": "completed",
+      "image_prompt": "Wide shot, cinematic lighting",
+      "video_prompt": "Slow dolly in, gentle motion",
+      "preview_path": "/Users/alizahidraja/Desktop/Github/magnific/jobs/68797cfe-a71f-4e62-8fea-0eed0a170c92/previews/scene_01.png",
+      "video_path": null,
+      "error": null,
+      "updated_at": "2026-06-03T02:08:41.745084Z"
+    },
+    {
+      "scene_id": "scene_02",
+      "title": "Climax",
+      "status": "completed",
+      "image_prompt": "Close-up, dramatic contrast",
+      "video_prompt": "Quick pan, energetic movement",
+      "preview_path": "/Users/alizahidraja/Desktop/Github/magnific/jobs/68797cfe-a71f-4e62-8fea-0eed0a170c92/previews/scene_02.png",
+      "video_path": null,
+      "error": null,
+      "updated_at": "2026-06-03T02:08:37.707515Z"
+    }
+  ]
+}

@@ -7,12 +7,8 @@ __pycache__/
 venv/
 dist/
 *.egg-info/
-jobs/
-jobs/*
-workflow.yaml
 .env
 .DS_Store
-*.mp4
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
